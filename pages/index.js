@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CSSReset } from "../components/ResetCss/ResetCss";
 import { StyledTimeline } from "../components/Timeline/style.js";
 import Menu from "../components/Menu";
+import { BannerAccount } from "../components/Banner";
 
 function HomePage() {
     const estilosDaHomePage = {
@@ -21,6 +22,7 @@ function HomePage() {
                 // backgroundColor: "red",
             }}>
                 <Menu />
+                <BannerAccount />
                 <Header />
                 <Timeline playlists={config.playlists}>
                     Conteúdo
