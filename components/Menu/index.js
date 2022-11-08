@@ -1,12 +1,14 @@
+import Search from './components/Seacrh.js';
 import './style.js'
 import { StyledMenu } from './style.js';
 
-export default function Menu() {
+export default function Menu({valorDoFiltro, setValorDoFiltro}) {
     return (
       <StyledMenu>
         <div>
           <Logo />
         </div>
+        <Search valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
       </StyledMenu>
     );
   }

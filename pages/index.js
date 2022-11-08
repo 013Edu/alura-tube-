@@ -4,13 +4,11 @@ import { CSSReset } from "../components/ResetCss/ResetCss";
 import { StyledTimeline } from "../components/Timeline/style.js";
 import Menu from "../components/Menu";
 import { BannerAccount } from "../components/Banner";
+import { useState } from "react";
 
 function HomePage() {
-    const estilosDaHomePage = {
-        // backgroundColor: "red" 
-    };
-
-    // console.log(config.playlists);
+    
+    const [valorDoFiltro, setValorDoFiltro] = useState('')
 
     return (
         <>
@@ -19,12 +17,11 @@ function HomePage() {
                 display: "flex",
                 flexDirection: "column",
                 flex: 1,
-                // backgroundColor: "red",
             }}>
-                <Menu />
+                <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
                 <BannerAccount />
                 <Header />
-                <Timeline playlists={config.playlists}>
+                <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
                     Conteúdo
                 </Timeline>
             </div>
@@ -33,15 +30,6 @@ function HomePage() {
 }
 
 export default HomePage
-
-// function Menu() {
-//     return (
-//         <div>
-//             Menu
-//         </div>
-//     )
-// }
-
 
 const StyledHeader = styled.div`
     img {
@@ -61,7 +49,6 @@ const StyledHeader = styled.div`
 function Header() {
     return (
         <StyledHeader>
-            {/* <img src="banner" /> */}
             <section className="user-info">
                 <img src={`https://github.com/${config.profile}.png`} />
                 <div>
@@ -77,11 +64,10 @@ function Header() {
     )
 }
 
-function Timeline(propriedades) {
-    // console.log("Dentro do componente", propriedades.playlists);
+function Timeline({searchValue, ...propriedades}) {
+
     const playlistNames = Object.keys(propriedades.playlists);
-    // Statement
-    // Retorno por expressão
+
     return (
         <StyledTimeline>
             {playlistNames.map((playlistName) => {
@@ -92,7 +78,9 @@ function Timeline(propriedades) {
                     <section>
                         <h2>{playlistName}</h2>
                         <div>
-                            {videos.map((video) => {
+                            {videos.filter((video) =>{
+                                return video.title.includes(searchValue)
+                            }).map((video) => {
                                 return (
                                     <a href={video.url}>
                                         <img src={video.thumb} />
