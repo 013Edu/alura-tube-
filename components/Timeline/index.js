@@ -1,4 +1,6 @@
+import Video from '../../pages/vide.js'
 import './style.js'
+import Link from 'next/link.js'
 
 export function Timeline(props){
     const playlistNames = Object.keys(props.playlist)
@@ -12,12 +14,15 @@ export function Timeline(props){
                         <div>
                             {videos.map((video) =>{
                                 return(
-                                    <a href={video.url}>
+                                   <Link legacyBehavior href='/vide'>
+                                         <a >
                                         <img src={video.thumb} />
                                         <span>
                                             {video.title}
                                         </span>
                                     </a>
+                                   
+                                   </Link>
                                 )
                             })}
                         </div>

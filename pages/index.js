@@ -4,23 +4,48 @@ import Menu from "../components/Menu";
 import { CSSReset } from "../components/ResetCss/ResetCss";
 import { StyledTimeline } from "../components/Timeline/style.js";
 import { ThemeProvider } from 'styled-components'
-import { lightTheme, darkTheme } from '../themes/theme'
 import { useState } from "react";
-import { Container } from "./style";
+import ColorModeProvider, { ColorModeContext } from "../components/Menu/components/Colormode";
+import { useContext } from "react";
+
+
+
+function ProviderWrapper(props){
+    return(
+        <ColorModeProvider initialValue={'dark'}>
+            {props.children}
+        </ColorModeProvider>    
+    )
+}
+
 
 function HomePage() {
     
-    const [valorDoFiltro, setValorDoFiltro] = useState('')
-    const [theme, setTheme] = useState('light')
-
-    const themeToggler = () =>{
-        theme === 'light' ? setTheme('dark') : setTheme('light')
+const theme = {
+    light: {
+        backgroundBase: "#f9f9f9",
+        backgroundLevel1: "#ffffff",
+        backgroundLevel2: "#f0f0f0",
+        borderBase: "#e5e5e5",
+        textColorBase: "#222222",
+    },
+    dark: {
+        backgroundBase: "#181818",
+        backgroundLevel1: "#202020",
+        backgroundLevel2: "#313131",
+        borderBase: "#383838",
+        textColorBase: "#FFFFFF",
     }
+};
+    
+    const [valorDoFiltro, setValorDoFiltro] = useState('')
 
+    const context = useContext(ColorModeContext)
+
+    
     return (
-        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme }>
-           <Container>
-           <CSSReset />
+         <ThemeProvider theme={theme[context.mode]} >
+            <CSSReset />
             <div style={{
                 display: "flex",
                 flexDirection: "column",
@@ -32,14 +57,20 @@ function HomePage() {
                  
                 </Timeline>
             </div>
-           </Container>
         </ThemeProvider>
     );
 }
 
-export default HomePage
+export default function _App(props){
+    return(
+        <ProviderWrapper>
+            <HomePage {...props} />
+        </ProviderWrapper>
+    )
+}
 
 const StyledHeader = styled.div`
+    background-color: ${({theme}) =>theme.backgroundLevel1};
     img {
         width: 80px;
         height: 80px;

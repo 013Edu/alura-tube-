@@ -1,3 +1,4 @@
+import DarkModeSwitch from './components/DarkModeSwitch.js';
 import Search from './components/Seacrh.js';
 import './style.js'
 import { StyledMenu } from './style.js';
@@ -9,6 +10,7 @@ export default function Menu({valorDoFiltro, setValorDoFiltro}) {
           <Logo />
         </div>
         <Search valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
+        <DarkModeSwitch />
       </StyledMenu>
     );
   }
