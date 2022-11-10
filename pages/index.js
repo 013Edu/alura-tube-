@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components'
 import { useState } from "react";
 import ColorModeProvider, { ColorModeContext } from "../components/Menu/components/Colormode";
 import { useContext } from "react";
+import { RegisterVideo } from "../components/RegisterVideo";
 
 
 
@@ -57,6 +58,7 @@ const theme = {
                  
                 </Timeline>
             </div>
+            <RegisterVideo />
         </ThemeProvider>
     );
 }
