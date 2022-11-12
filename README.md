@@ -26,6 +26,6 @@ Um site espelhado no YouTube, com sistema de `playlists` dividindo bem os conte√
  
 ![Screenshot_20221112_054530](https://user-images.githubusercontent.com/91925011/201493929-f8f2f4ab-a5c9-4be8-bb4b-16507da13393.png)
 
-# Acesse o projeto em tempo real:
+
 
 
