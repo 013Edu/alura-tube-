@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './style'
 import { StyledRegisterVideo } from './style'
+import { createClient } from '@supabase/supabase-js'
 
 
 function useForm(props){
@@ -23,14 +24,23 @@ function useForm(props){
     }
 }
 
+const PROJECT_URL = 'https://bvzechfnubgziryxfkit.supabase.co'
+const PUBLIC_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ2emVjaGZudWJnemlyeXhma2l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxODI0NTAsImV4cCI6MTk4Mzc1ODQ1MH0.b0Kh0qwL2V4mBl_gGHvlL7DyRESXGpn5Dcn5_d2vtfU'
+
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY)
+
+function getThumbnail(url) {
+    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+}
+
 
 
 export function RegisterVideo(){
 
-    const [formVisivel, setFormVisivel] = useState(true)
+    const [formVisivel, setFormVisivel] = useState(false)
 
     const formCadastro = useForm({
-        initialValues: {titulo: 'Frost', url: 'http//youtube.com...'}
+        initialValues: {titulo: 'Legal', url: 'https://www.youtube.com/watch?v=QsqatJxAUtk'}
     })
 
     return(
@@ -41,8 +51,20 @@ export function RegisterVideo(){
             {formVisivel ? (
                 <form onSubmit={(e) =>{
                     e.preventDefault()
-                    setFormVisivel(false)
+                    supabase.from('video').insert({
+                        title: formCadastro.values.titulo,
+                        url: formCadastro.values.url,
+                        thumb: getThumbnail(formCadastro.values.url),
+                        playlist: 'jogos'
+                    })
+                    .then((response) =>{
+                        console.log(response)
+                    })
+                    .catch(err =>{
+                        console.log(err)
+                    })
                     formCadastro.clearForm()
+                    setFormVisivel(false)
                 }}>
                 <div>
                     <button type='button' className='close-modal' onClick={() =>{setFormVisivel(false)}}>
